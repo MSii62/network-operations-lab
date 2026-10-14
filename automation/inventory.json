@@ -1,0 +1,8 @@
+{
+  "devices": [
+    {"name": "core-r1", "address": "10.255.0.1", "role": "ospf-core", "config": "configs/frr/r1.conf"},
+    {"name": "core-r2", "address": "10.255.0.2", "role": "ospf-core", "config": "configs/frr/r2.conf"},
+    {"name": "edge-router", "address": "10.255.10.2", "role": "bgp-edge", "config": "configs/frr/edge-bgp.conf"}
+  ],
+  "probes": ["127.0.0.1", "localhost"]
+}

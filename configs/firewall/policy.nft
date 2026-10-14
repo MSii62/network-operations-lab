@@ -1,0 +1,23 @@
+#!/usr/sbin/nft -f
+# Linux nftables example. Apply only on the lab firewall.
+flush ruleset
+
+table inet netlab_filter {
+  chain forward {
+    type filter hook forward priority filter; policy drop;
+    ct state established,related accept
+    iifname "office" oifname "trading" drop
+    iifname "office" oifname "servers" tcp dport { 22, 9100 } drop
+    iifname "management" accept
+    iifname "trading" oifname "servers" accept
+    iifname "servers" oifname "trading" accept
+    iifname "office" oifname "internet" accept
+  }
+}
+
+table ip netlab_nat {
+  chain postrouting {
+    type nat hook postrouting priority srcnat;
+    oifname "internet" ip saddr 10.10.30.0/24 masquerade
+  }
+}

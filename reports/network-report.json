@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-10-14T19:13:27.231523+00:00",
+  "probes": [
+    {
+      "target": "127.0.0.1",
+      "reachable": true
+    },
+    {
+      "target": "localhost",
+      "reachable": true
+    }
+  ],
+  "configuration_audit": [
+    {
+      "file": "configs/frr/r1.conf",
+      "control": "OSPF",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    },
+    {
+      "file": "configs/frr/r1.conf",
+      "control": "Multicast",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    },
+    {
+      "file": "configs/frr/r2.conf",
+      "control": "OSPF",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    },
+    {
+      "file": "configs/frr/edge-bgp.conf",
+      "control": "BGP",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    },
+    {
+      "file": "configs/firewall/policy.nft",
+      "control": "Firewall default deny",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    },
+    {
+      "file": "configs/firewall/policy.nft",
+      "control": "NAT",
+      "status": "PASS",
+      "detail": "all required tokens present"
+    }
+  ]
+}

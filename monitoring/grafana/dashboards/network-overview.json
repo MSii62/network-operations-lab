@@ -1,0 +1,34 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "panels": [
+    {
+      "title": "Node Exporter Up",
+      "type": "stat",
+      "gridPos": {"h": 5, "w": 8, "x": 0, "y": 0},
+      "targets": [{"expr": "up{job=\"node\"}", "legendFormat": "node-exporter", "refId": "A"}],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "colorMode": "value"}
+    },
+    {
+      "title": "ICMP Probe Status",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 16, "x": 8, "y": 0},
+      "targets": [{"expr": "probe_success", "legendFormat": "{{instance}}", "refId": "A"}],
+      "fieldConfig": {"defaults": {"min": 0, "max": 1, "unit": "short"}, "overrides": []}
+    },
+    {
+      "title": "Probe Latency",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8},
+      "targets": [{"expr": "probe_duration_seconds * 1000", "legendFormat": "{{instance}}", "refId": "A"}],
+      "fieldConfig": {"defaults": {"unit": "ms"}, "overrides": []}
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["network", "operations", "lab"],
+  "templating": {"list": []},
+  "time": {"from": "now-15m", "to": "now"},
+  "title": "Network Operations Lab",
+  "uid": "network-operations-lab",
+  "version": 1
+}
