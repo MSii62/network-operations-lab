@@ -1,0 +1,19 @@
+# Captured on local development host
+
+$ python automation/network_health.py --targets 127.0.0.1,localhost
+TARGET                   STATUS     LATENCY      DETAIL
+-----------------------------------------------------------------
+127.0.0.1                UP         <latency varies> reachable
+localhost                UP         <latency varies> reachable
+
+$ python automation/config_audit.py
+[PASS] configs/frr/r1.conf | OSPF | all required tokens present
+[PASS] configs/frr/r1.conf | Multicast | all required tokens present
+[PASS] configs/frr/r2.conf | OSPF | all required tokens present
+[PASS] configs/frr/edge-bgp.conf | BGP | all required tokens present
+[PASS] configs/firewall/policy.nft | Firewall default deny | all required tokens present
+[PASS] configs/firewall/policy.nft | NAT | all required tokens present
+
+$ python -m unittest discover -s tests -v
+Ran 2 tests in 0.045s
+OK

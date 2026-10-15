@@ -99,4 +99,4 @@ All addresses and credentials in this repository are lab-only examples. Do not c
 4. Stop a monitored endpoint and confirm the health script reports it.
 5. Query Prometheus for node availability and display the result in Grafana.
 
-See [`docs/troubleshooting-runbook.md`](docs/troubleshooting-runbook.md) for commands and expected observations.
+See [`docs/troubleshooting-runbook.md`](docs/troubleshooting-runbook.md) for commands and expected observations. Guided experiments and evidence templates are in [`experiments/`](experiments/).
