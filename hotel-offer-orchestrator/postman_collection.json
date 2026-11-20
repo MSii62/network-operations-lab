@@ -1,0 +1,10 @@
+{
+  "info": { "name": "Hotel Offer Orchestrator", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3000" }],
+  "item": [
+    { "name": "Delhi - best offers", "request": { "method": "GET", "url": "{{baseUrl}}/api/hotels?city=delhi" } },
+    { "name": "Delhi - Redis price filter", "request": { "method": "GET", "url": "{{baseUrl}}/api/hotels?city=delhi&minPrice=5000&maxPrice=6000" } },
+    { "name": "Unknown city - no results", "request": { "method": "GET", "url": "{{baseUrl}}/api/hotels?city=mumbai" } },
+    { "name": "Health", "request": { "method": "GET", "url": "{{baseUrl}}/health" } }
+  ]
+}

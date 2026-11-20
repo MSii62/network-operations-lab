@@ -1,0 +1,36 @@
+services:
+  api:
+    build: .
+    command: node dist/server.js
+    environment:
+      PORT: 3000
+      REDIS_URL: redis://redis:6379
+      TEMPORAL_ADDRESS: temporal:7233
+      SUPPLIER_BASE_URL: http://api:3000
+    ports: ["3000:3000"]
+    depends_on: [redis, temporal]
+    restart: unless-stopped
+  worker:
+    build: .
+    command: node dist/worker.js
+    environment:
+      REDIS_URL: redis://redis:6379
+      TEMPORAL_ADDRESS: temporal:7233
+      SUPPLIER_BASE_URL: http://api:3000
+    depends_on: [redis, temporal, api]
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  temporal:
+    image: temporalio/auto-setup:1.26.2
+    environment:
+      DB: sqlite
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+    ports: ["7233:7233"]
+  temporal-ui:
+    image: temporalio/ui:2.32.0
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+    ports: ["8080:8080"]
+    depends_on: [temporal]

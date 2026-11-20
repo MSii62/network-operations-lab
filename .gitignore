@@ -5,3 +5,7 @@ __pycache__/
 .idea/
 .DS_Store
 grafana-data/
+
+# Hotel offer orchestrator build artifacts
+hotel-offer-orchestrator/node_modules/
+hotel-offer-orchestrator/dist/
