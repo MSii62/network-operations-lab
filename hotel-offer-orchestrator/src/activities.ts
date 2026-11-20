@@ -3,14 +3,36 @@ import { filterHotels, saveHotels } from './redis';
 import { Hotel, HotelResult, Supplier } from './types';
 
 async function fetchSupplier(path: string, city: string): Promise<Hotel[]> {
-  const response = await fetch(`${config.supplierBaseUrl}${path}?city=${encodeURIComponent(city)}`);
-  if (!response.ok) throw new Error(`${path} returned HTTP ${response.status}`);
-  return response.json() as Promise<Hotel[]>;
+  try {
+    const response = await fetch(`${config.supplierBaseUrl}${path}?city=${encodeURIComponent(city)}`);
+    if (!response.ok) throw new Error(`${path} returned HTTP ${response.status}`);
+    const hotels = await response.json() as Hotel[];
+    console.info(`supplier activity ${path} returned ${hotels.length} hotels for ${city}`);
+    return hotels;
+  } catch (error) {
+    console.error(`supplier activity failed: ${path}, city=${city}`, error);
+    throw error;
+  }
 }
 export async function fetchSupplierA(city: string) { return fetchSupplier('/supplierA/hotels', city); }
 export async function fetchSupplierB(city: string) { return fetchSupplier('/supplierB/hotels', city); }
-export async function cacheHotels(city: string, hotels: HotelResult[]) { await saveHotels(city, hotels); }
-export async function readHotels(city: string, minPrice: number, maxPrice: number) { return filterHotels(city, minPrice, maxPrice); }
+export async function cacheHotels(city: string, hotels: HotelResult[]) {
+  try {
+    await saveHotels(city, hotels);
+    console.info(`cached ${hotels.length} deduplicated hotels for ${city}`);
+  } catch (error) {
+    console.error(`Redis cache activity failed for city=${city}`, error);
+    throw error;
+  }
+}
+export async function readHotels(city: string, minPrice: number, maxPrice: number) {
+  try {
+    return await filterHotels(city, minPrice, maxPrice);
+  } catch (error) {
+    console.error(`Redis filter activity failed for city=${city}`, error);
+    throw error;
+  }
+}
 
 export function deduplicate(a: Hotel[], b: Hotel[]): HotelResult[] {
   const best = new Map<string, HotelResult>();
